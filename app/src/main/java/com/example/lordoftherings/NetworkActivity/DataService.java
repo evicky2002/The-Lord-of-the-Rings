@@ -3,23 +3,30 @@ package com.example.lordoftherings.NetworkActivity;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.example.lordoftherings.DataModels.BookModel;
+import com.example.lordoftherings.DataModels.MovieModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataService {
     public List<BookModel> booksList= new ArrayList<>();
+    public List<MovieModel> movieList= new ArrayList<>();
+
     public JSONArray bookArray;
-    public JSONObject jsonObject;
+    public JSONArray movieArray;
+
+    public JSONObject bookObject,movieObject;
     public static final String ACCESSTOKEN = "0BeOhwGQ4Sn_3EIHHlo_";
     public final String ENDPOINT = "https://the-one-api.dev/v2";
     Context context;
@@ -29,6 +36,10 @@ public class DataService {
     }
     public interface BookListener{
         void onResponse(List<BookModel> response);
+        void onError(String placeholder);
+    }
+    public interface MovieListener{
+        void onResponse(List<MovieModel> response);
         void onError(String placeholder);
     }
 
@@ -46,8 +57,8 @@ public class DataService {
                 try {
                     bookArray = response.getJSONArray("docs");
                     for (int i=0;i<bookArray.length();i++){
-                        jsonObject = bookArray.getJSONObject(i);
-                        booksList.add(new BookModel(jsonObject.getString("_id"),jsonObject.getString("name")));
+                        bookObject = bookArray.getJSONObject(i);
+                        booksList.add(new BookModel(bookObject.getString("_id"), bookObject.getString("name")));
                     }
                     bookListener.onResponse(booksList);
                 } catch (Exception e) {
@@ -63,4 +74,43 @@ public class DataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+    public void getMovies(MovieListener movieListener){
+        String url = ENDPOINT+"/movie";
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put("key","value");
+        }catch (Exception e){
+
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, parameters, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    movieArray = response.getJSONArray("docs");
+                    for (int i=0;i<movieArray.length();i++){
+                        movieObject = movieArray.getJSONObject(i);
+                        movieList.add(new MovieModel(movieObject.getString("name"), movieObject.getString("_id")));
+                    }
+                    movieListener.onResponse(movieList);
+                } catch (Exception e) {
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("HELLO","volley error here");
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + ACCESSTOKEN);
+                return headers;
+            }
+        };
+        MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
 }

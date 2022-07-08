@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.lordoftherings.DataModels.BookModel;
 import com.example.lordoftherings.NetworkActivity.DataService;
@@ -15,36 +18,30 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 public class FirstActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    MaterialCardView materialCardView;
-    DataService dataService = new DataService(this);
 
+    RecyclerView recyclerView;
+    ImageView ivBooks, ivMovies;
+    Intent bookIntent, movieIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        materialCardView = (MaterialCardView) findViewById(R.id.btnBooks);
-        recyclerView = (RecyclerView) findViewById(R.id.recylerView);
-        materialCardView.setOnClickListener(new View.OnClickListener() {
+
+        bookIntent = new Intent(FirstActivity.this,BookActivity.class);
+        movieIntent = new Intent(FirstActivity.this,MovieActivity.class);
+        ivBooks = (ImageView) findViewById(R.id.ivBooks);
+        ivMovies= (ImageView) findViewById(R.id.ivMovies);
+
+        ivBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("HELLO","HERE");
-
-                dataService.getBooks(new DataService.BookListener() {
-                    @Override
-                    public void onResponse(List<BookModel> response) {
-                        BookAdapter adapter = new BookAdapter(response);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(FirstActivity.this));
-                        recyclerView.setAdapter(adapter);
-
-                    }
-
-                    @Override
-                    public void onError(String placeholder) {
-                        Log.i("HELLO","error in response");
-                    }
-                });
+                startActivity(bookIntent);
+            }
+        });
+        ivMovies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(movieIntent);
             }
         });
     }
