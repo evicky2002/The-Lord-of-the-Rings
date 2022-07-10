@@ -26,10 +26,7 @@ public class BookActivity extends AppCompatActivity {
             @Override
             public void onResponse(List<BookModel> response) {
                 bookModels = response;
-                BookAdapter adapter = new BookAdapter(response, BookActivity.this);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(BookActivity.this));
-                recyclerView.setAdapter(adapter);
+                getChapters(response);
             }
 
             @Override
@@ -37,5 +34,26 @@ public class BookActivity extends AppCompatActivity {
                 Log.i("HELLO","error in response");
             }
         });
+    }
+    public void getChapters(List<BookModel> bookModels){
+
+        for(int i=0;i<bookModels.size();i++){
+            dataService.getChapters(bookModels.get(i).getId(), new DataService.ChapterListener() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("BOOKACTIVITY",bookModels.get(0).getChapters().toString());
+
+                    BookAdapter adapter = new BookAdapter(bookModels, BookActivity.this);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(BookActivity.this));
+                    recyclerView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onError(String placeholder) {
+
+                }
+            });
+        }
     }
 }

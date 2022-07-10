@@ -27,13 +27,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @NonNull
     @Override
     public MovieAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.ViewHolder holder, int position) {
-        holder.tvMovieName.setText(movieModels.get(position).getName());
+        holder.tvName.setText(movieModels.get(position).getName());
     }
 
     @Override
@@ -41,18 +41,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movieModels.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvMovieName;
+        private final TextView tvName;
         ConstraintLayout parentLayout;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
 
-            tvMovieName = (TextView) view.findViewById(R.id.tvMovieName);
-            parentLayout = (ConstraintLayout) view.findViewById(R.id.movie_item_layout);
+            tvName = (TextView) view.findViewById(R.id.tvName);
+            parentLayout = (ConstraintLayout) view.findViewById(R.id.book_item_layout);
         }
         public TextView getMovieNameTextView() {
-            return tvMovieName;
+            return tvName;
         }
 
     }

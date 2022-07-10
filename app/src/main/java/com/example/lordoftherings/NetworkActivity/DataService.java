@@ -22,11 +22,11 @@ import java.util.Map;
 public class DataService {
     public List<BookModel> booksList= new ArrayList<>();
     public List<MovieModel> movieList= new ArrayList<>();
+    public ArrayList<String> bookChaptersArray;
 
-    public JSONArray bookArray;
-    public JSONArray movieArray;
+    public JSONArray bookArray, movieArray, bookChapterArray;
+    public JSONObject bookObject,movieObject,bookChapterObject;
 
-    public JSONObject bookObject,movieObject;
     public static final String ACCESSTOKEN = "0BeOhwGQ4Sn_3EIHHlo_";
     public final String ENDPOINT = "https://the-one-api.dev/v2";
     Context context;
@@ -40,6 +40,10 @@ public class DataService {
     }
     public interface MovieListener{
         void onResponse(List<MovieModel> response);
+        void onError(String placeholder);
+    }
+    public interface ChapterListener{
+        void onResponse(String response);
         void onError(String placeholder);
     }
 
@@ -112,5 +116,61 @@ public class DataService {
         };
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+
+    public void getChapters(String id, ChapterListener chapterListener){
+
+        String url = ENDPOINT+"/book/"+id+"/chapter";
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put("key","value");
+        }catch (Exception e){
+
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, parameters, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    bookChapterArray = response.getJSONArray("docs");
+                    bookChaptersArray = new ArrayList<>(bookChapterArray.length());
+                    for (int i=0;i<bookChapterArray.length();i++){
+
+                        bookChapterObject = bookChapterArray.getJSONObject(i);
+
+                        bookChaptersArray.add(bookChapterObject.getString("chapterName"));
+
+
+                    }
+
+                    for(int j=0;j<booksList.size();j++){
+                        if(booksList.get(j).getId() == id){
+                            booksList.get(j).setTotalChapters(response.getString("total"));
+                            booksList.get(j).setChapters(bookChaptersArray);
+                            break;
+                        }
+                    }
+
+                    chapterListener.onResponse("success");
+                } catch (Exception e) {
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("HELLO","volley error here");
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + ACCESSTOKEN);
+                return headers;
+            }
+        };
+        MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.lordoftherings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull BookAdapter.ViewHolder holder, int position) {
         holder.tvName.setText(bookModels.get(position).getName());
+        holder.tvTotalChapters.setText("No. of Chapters : "+bookModels.get(position).getTotalChapters());
+
         switch (position){
             case 0: holder.ivBook.setImageResource(R.drawable.book_one);
                     break;
@@ -47,7 +50,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context,ChaptersActivity.class);
+                context.startActivity(intent);
             }
         });
     }
@@ -58,7 +62,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvName;
+        private final TextView tvName, tvTotalChapters;
         ImageView ivBook;
         ConstraintLayout parentLayout;
 
@@ -68,6 +72,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
             tvName = (TextView) view.findViewById(R.id.tvName);
             ivBook = (ImageView) view.findViewById(R.id.ivBook);
+            tvTotalChapters = (TextView) view.findViewById(R.id.tvTotalChapters);
+
             parentLayout = (ConstraintLayout) view.findViewById(R.id.book_item_layout);
         }
         public TextView getNameTextView() {
