@@ -1,7 +1,9 @@
-package com.example.lordoftherings;
+package com.example.lordoftherings.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lordoftherings.ChaptersActivity;
 import com.example.lordoftherings.DataModels.BookModel;
+import com.example.lordoftherings.R;
 
 import java.util.List;
 
@@ -50,7 +54,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,ChaptersActivity.class);
+
+                Intent intent = new Intent(context, ChaptersActivity.class);
+                Log.i("CHAPTERSACTIVITY","here");
+
+                intent.putStringArrayListExtra("CHAPTERS",bookModels.get(position).getChapters());
                 context.startActivity(intent);
             }
         });

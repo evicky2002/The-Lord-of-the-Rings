@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.lordoftherings.DataModels.BookModel;
+import com.example.lordoftherings.Adapters.MovieAdapter;
 import com.example.lordoftherings.DataModels.MovieModel;
 import com.example.lordoftherings.NetworkActivity.DataService;
 

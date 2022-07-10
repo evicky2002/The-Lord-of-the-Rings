@@ -91,9 +91,9 @@ public class DataService {
             public void onResponse(JSONObject response) {
                 try {
                     movieArray = response.getJSONArray("docs");
-                    for (int i=0;i<movieArray.length();i++){
+                    for (int i=2;i<movieArray.length();i++){
                         movieObject = movieArray.getJSONObject(i);
-                        movieList.add(new MovieModel(movieObject.getString("name"), movieObject.getString("_id")));
+                        movieList.add(new MovieModel(movieObject.getString("name"), movieObject.getString("_id"),movieObject.getString("runtimeInMinutes")));
                     }
                     movieListener.onResponse(movieList);
                 } catch (Exception e) {

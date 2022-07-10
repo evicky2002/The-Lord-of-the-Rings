@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.lordoftherings.Adapters.BookAdapter;
 import com.example.lordoftherings.DataModels.BookModel;
 import com.example.lordoftherings.NetworkActivity.DataService;
 
@@ -21,19 +22,21 @@ public class BookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
         recyclerView = (RecyclerView) findViewById(R.id.recylerView);
+            dataService.getBooks(new DataService.BookListener() {
+                @Override
+                public void onResponse(List<BookModel> response) {
+                    bookModels = response;
+                    getChapters(response);
+                }
 
-        dataService.getBooks(new DataService.BookListener() {
-            @Override
-            public void onResponse(List<BookModel> response) {
-                bookModels = response;
-                getChapters(response);
-            }
+                @Override
+                public void onError(String placeholder) {
+                    Log.i("HELLO","error in response");
+                }
+            });
 
-            @Override
-            public void onError(String placeholder) {
-                Log.i("HELLO","error in response");
-            }
-        });
+
+
     }
     public void getChapters(List<BookModel> bookModels){
 
@@ -42,7 +45,6 @@ public class BookActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     Log.i("BOOKACTIVITY",bookModels.get(0).getChapters().toString());
-
                     BookAdapter adapter = new BookAdapter(bookModels, BookActivity.this);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(BookActivity.this));

@@ -6,11 +6,15 @@
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/drawable/ic_book.xml" value="0.158" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/drawable/ic_lord_of_the_rings_png_title_by_workfromhomegal_dail067_fullview_1.xml" value="0.158" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/activity_book.xml" value="0.16576086956521738" />
+        <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/activity_chapters.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/activity_first.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/activity_main.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/activity_movie.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/book_item.xml" value="0.4939271255060729" />
+        <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/chapter_item.xml" value="0.536" />
+        <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/movie_item.xml" value="0.536" />
         <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/layout/movie_item_layout.xml" value="0.16576086956521738" />
+        <entry key="..\:/Users/evick/AndroidStudioProjects/LordoftheRings/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
   </component>
